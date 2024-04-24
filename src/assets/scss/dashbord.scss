@@ -1,4 +1,4 @@
-.main-dashbord{
+.main-dashboard{
 
     width: 100%;
    
@@ -9,5 +9,12 @@
        
     height: 100px;
     background: white;
+    display: flex;
+    }
+    .sub_category{
+        margin: 0 40px;
+    }
+    .main_carasoal{
+        margin-top: 20px;
     }
 }

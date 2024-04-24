@@ -4,8 +4,7 @@ export const registerdata = async (data)=>{
     console.log("data", data)
     const responce = await instance.post('/user/register', data);
     return responce
-
-
+    
 }
 export const loginData = async (data)=>{
     console.log("data", data)
@@ -15,7 +14,13 @@ export const loginData = async (data)=>{
 
 }
 export const categoryList = async ()=>{
-    const responce = await instance.post('/category/list', );
+    const responce = await instance.get('/category/list', );
+    return responce
+
+
+}
+export const productList = async ()=>{
+    const responce = await instance.get('/product/list', );
     return responce
 
 
