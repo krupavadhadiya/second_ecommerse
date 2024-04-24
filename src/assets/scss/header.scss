@@ -1,0 +1,57 @@
+.main-header{
+    background: black;
+    color: white;
+    height: 45px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+  
+    .web-name{
+        display: flex;
+    }
+    .all-menu{
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            display: inline-block; 
+            margin-right: 25px; 
+            cursor: pointer;
+        }
+    }
+    .search-menu{
+
+        input{
+            border-radius: 15px;
+    height: 33px;
+    width: 255px;
+    outline: none; 
+        }
+        button{
+            height: 30px;
+    width: 100px;
+    border-radius: 15px;
+    cursor: pointer;
+        }
+    }
+    .logout-btn{
+       
+    }
+    .cart{
+        position:'relative';
+        .notification{
+            position: absolute;
+            top: 0;
+            background: red;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            border-radius: 100%;
+        }
+    }
+    
+}
