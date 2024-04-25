@@ -2,6 +2,7 @@ import Login from "../auth/login/Login";
 import Register from "../auth/register/Register";
 import Category from "../pages/category/Category";
 import Dashbord from "../pages/dashbord/Dashbord";
+import ProductAdd from "../pages/productadd/ProductAdd";
 
 export const privateroutes = [
     {
@@ -11,6 +12,10 @@ export const privateroutes = [
     {
       name: '/dashbord',
       component:<Dashbord/>,
+    },
+    {
+      name: '/productadd',
+      component:<ProductAdd/>,
     },
 ];
 export const publiceroutes = [

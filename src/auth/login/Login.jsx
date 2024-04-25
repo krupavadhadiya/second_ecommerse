@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomFormItem from "../../pages/customformItem/CustomFormItem";
 import { loginData, registerdata } from "../../api/auth_servise";
 import { toast } from "sonner";
+import CryptoJS from "crypto-js";
 
 const cookies = Cookies;
 
@@ -12,40 +13,47 @@ const Login = () => {
   const navigate = useNavigate();
 
   const formFields = [
-   
     {
-      label: 'email',
-      name: 'email',
-      rules: [{ required: true, message: 'Please input your email!' }],
+      label: "email",
+      name: "email",
+      rules: [{ required: true, message: "Please input your email!" }],
     },
-    
-    {
-      label: 'password',
-      name: 'password',
-      rules: [{ required: true, message: 'Please input your password!' }],
-    },
-   
 
-  ]
+    {
+      label: "password",
+      name: "password",
+      rules: [{ required: true, message: "Please input your password!" }],
+    },
+  ];
 
   const onFinish = async (values) => {
     try {
       const response = await loginData(values);
       console.log(response, "responsesnkdn");
-      toast.success("Login successful!"); // Success toast
-        const logindata = response.data.data.authToken
-        // console.log("logindata23", logindata)
-      localStorage.setItem('loginfile', JSON.stringify(logindata));
-      navigate('/dashbord')
+      toast.success("Login successful!");
+      const logindata = response.data.data;
+      console.log("logindata23", logindata);
+
+      const dataString = JSON.stringify(logindata);
+
+      const encryptedData = CryptoJS.AES.encrypt(
+        dataString,
+        "secret_key"
+      ).toString();
+
+      Cookies.set("logindata", encryptedData);
+
+      // localStorage.setItem('loginfile', JSON.stringify(logindata));
+      navigate("/dashbord");
     } catch (err) {
-      toast.error("An error occurred."); //
+      toast.error("An error occurred.");
       console.error("error", err);
     }
   };
 
   return (
     <div className="main-useform">
-   <Form
+      <Form
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}

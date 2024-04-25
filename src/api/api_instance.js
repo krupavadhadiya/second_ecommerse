@@ -1,4 +1,7 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+import CryptoJS from "crypto-js";
+
 
 const instance = axios.create({
   baseURL: "http://172.22.11.131:4000",
@@ -25,10 +28,20 @@ instance.interceptors.response.use(
 );
 
 instance.interceptors.request.use(function (config) {
-  const tokenData = JSON.parse(localStorage.getItem("loginfile")) || [];
-  console.log("token data: " + tokenData);
-  config.headers["authtoken"] = tokenData || "";
+
+
+  const tokenData = Cookies.get("logindata");
+  console.log(tokenData);
+   if(tokenData){
+    const bytes = CryptoJS.AES.decrypt(tokenData, 'secret_key');
+    const decryptedToken = bytes.toString(CryptoJS.enc.Utf8);
+    const data = JSON.parse(decryptedToken);
+    // console.log("token data: " + decryptedToken);
+  // console.log(authToken,'authTokenauthTokenauthTokenauthTokenauthToken');
+    config.headers["authtoken"] = data?.authToken ?? "";
+  }
   return config;
+  
 });
 
 export default instance;

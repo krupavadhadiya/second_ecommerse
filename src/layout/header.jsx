@@ -7,8 +7,13 @@ import { useNavigate } from 'react-router-dom'
   const navigate = useNavigate()
   
   
+  const productListSearch = () => {
+
+  }
   
-  
+  const logout = () => {
+    
+  }
  
   
   
@@ -29,6 +34,15 @@ import { useNavigate } from 'react-router-dom'
         </ul>
       </div>
     
+      <div className="search-menu">
+      <input
+          type="text"
+          placeholder="search"
+          value='' 
+          onChange={(e) => productListSearch(e.target.value)} 
+        />
+        <button onClick={logout}>Logout</button>
+      </div>
 
    
     </div>

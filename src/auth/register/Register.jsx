@@ -26,7 +26,7 @@ const Register = () => {
     }
   };
 
-  const { mutateAsync: register, isPending } = useRegisterMutation(registerMutation);
+  const { mutateAsync: register } = useRegisterMutation(registerMutation);
 
   const formFields = [
     {
