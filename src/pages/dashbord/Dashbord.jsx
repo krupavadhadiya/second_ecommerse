@@ -3,7 +3,8 @@ import { allStoreData } from "../../store/allStoreData";
 import {
   useCategoryQuery,
   useProductListQuery,
-} from "../../queries/allpagesquery";
+  useUserDetailQuery,
+} from "../../queries/allpages-query";
 import mobileacc from "../../assets/Images/22fddf3c7da4c4f4.webp";
 import wc from "../../assets/Images/wc.jpg";
 import carasoal from "../../assets/Images/caroasol1.webp";
@@ -37,7 +38,8 @@ const Dashbord = () => {
   // const { data } = useProductListQuery();
   const { data: categoryData } = useCategoryQuery();
   const { data: productData } = useProductListQuery();
-  // console.log("productList",productData)
+  const { data: userDetail } = useUserDetailQuery();
+  console.log("userDetail", userDetail);
 
   useEffect(() => {
     if (categoryData) {
@@ -54,9 +56,28 @@ const Dashbord = () => {
     }
   }, [productData, setState]);
 
+  useEffect(() => {
+    if (userDetail) {
+      const userDetailData = userDetail.data?.data || [];
+      setState({ userData: userDetailData });
+      localStorage.setItem("userDetail", JSON.stringify(userDetailData));
+    }
+  }, [userDetail, setState]);
+
+  const productadd = () => {
+    navigate("/productadd");
+    
+  };
+
   return (
     <div className="main-dashboard">
+    <div>
+    <div className="heading" style={{marginBottom:'10px'}}>
+            <h3>category</h3>
+          </div>
+    
       <div className="main-category">
+     
         {categoryListDatat.map((category, i) => (
           <div className="sub_category" key={i}>
             <div className="category_port">
@@ -65,6 +86,7 @@ const Dashbord = () => {
             </div>
           </div>
         ))}
+      </div>
       </div>
 
       <div className="main_carasoal">
@@ -83,14 +105,14 @@ const Dashbord = () => {
           </div>
         </Carousel>
       </div>
-
       <div className="main_product">
         <div className="add_product">
           <div className="heading">
-            <h2>All product List</h2>
+            <h3>All product List</h3>
           </div>
           <div className="add_btn">
-            <button onClick={()=> navigate('/productadd')}>Product Add</button>
+            <button onClick={productadd}>Product Add</button>
+            {/* {userDetail.data?.data?.role === 'ADMIN ' ? <button onClick={productadd}>Product Add</button> : null }      */}
           </div>
         </div>
         <div className="sub_product">

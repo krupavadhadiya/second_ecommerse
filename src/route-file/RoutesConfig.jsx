@@ -6,14 +6,17 @@ import ProductAdd from "../pages/productadd/ProductAdd";
 
 export const privateroutes = [
     {
+      allowedRoles: ['user','admin'],
       name: '/category',
       component:<Category/>,
     },
     {
+      allowedRoles: ['user','admin'],
       name: '/dashbord',
       component:<Dashbord/>,
     },
     {
+      allowedRoles: ['admin'],
       name: '/productadd',
       component:<ProductAdd/>,
     },

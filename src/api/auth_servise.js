@@ -25,3 +25,23 @@ export const productList = async ()=>{
 
 
 }
+export const userDetail = async ()=>{
+    const responce = await instance.get('/user/', );
+    return responce
+
+
+}
+export const productAddData = async (data)=>{
+    console.log("productadddata", data)
+    const responce = await instance.post('/product/add',data );
+    return responce
+
+
+}
+export const brandList = async ()=>{
+    // console.log("productadddata", )
+    const responce = await instance.get('/brand/list' );
+    return responce
+
+
+}

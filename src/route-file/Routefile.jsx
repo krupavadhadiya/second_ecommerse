@@ -11,7 +11,7 @@ const Routefile = () => {
       
       <Routes>
         {privateroutes.map(({ name, component, allowedRoles }, i) => (
-          <Route element={<Praviteroute/>}>
+          <Route element={<Praviteroute allowedRoles={allowedRoles}/>}>
             <Route key={i} path={name} element={component} />
           </Route>
         ))}

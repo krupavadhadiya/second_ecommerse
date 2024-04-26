@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CustomFormItem from "../../pages/customformItem/CustomFormItem";
 import { registerdata } from "../../api/auth_servise";
 import { toast } from "sonner";
-import { useRegisterMutation } from "../../queries/auntheticationquery";
+import { useRegisterMutation } from "../../queries/aunthetication-query";
 // import { useQuery } from "@tanstack/react-query";
 // import { fetchnotes } from "../../Utilities/http";
 
