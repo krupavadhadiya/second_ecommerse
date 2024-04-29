@@ -17,7 +17,7 @@ export const privateroutes = [
     },
     {
       allowedRoles: ['admin'],
-      name: '/productadd',
+      name: '/product',
       component:<ProductAdd/>,
     },
 ];

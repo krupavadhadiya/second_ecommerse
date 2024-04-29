@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { brandList, categoryList, productAddData, productList, userDetail } from "../api/auth_servise"
+import { SubCategoryList, brandList, categoryList, productAddData, productList, prouctDelete, prouctSearch, userDetail } from "../api/auth_servise"
 
 export const useCategoryQuery = () =>{
     return useQuery({
@@ -41,4 +41,26 @@ export const useCategoryQuery = () =>{
       queryKey:["brand-list"],
       queryFn: async () => await brandList(),
     })
+  }
+  export const useSubCategoryListQuery = () =>{
+    return useQuery({
+      queryKey:["subategory-list"],
+      queryFn: async () => await SubCategoryList(),
+    })
+  }
+  export const useProductDeleteMutation = (mutational) =>{
+  
+    return useMutation({
+      mutationKey: ["product-delete"],
+      mutationFn: async (payload) => await prouctDelete(payload),
+      ...mutational
+    });
+  }
+  export const useProductSearchMutation = (mutational) =>{
+  
+    return useMutation({
+      mutationKey: ["product-search"],
+      mutationFn: async (value) => await prouctSearch(value),
+      ...mutational
+    });
   }

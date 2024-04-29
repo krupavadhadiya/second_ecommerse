@@ -1,12 +1,25 @@
-import { Button, Form, Input, InputNumber } from "antd";
-import React from "react";
+import { Button, Form, Input, InputNumber, Select } from "antd";
+import React, { useState } from "react";
 import { toast } from "sonner";
-import { useBrandListQuery, useProductaddMutation } from "../../queries/allpages-query";
+import {
+  useBrandListQuery,
+  useProductaddMutation,
+  useSubCategoryListQuery,
+} from "../../queries/allpages-query";
+import { allStoreData } from "../../store/allStoreData";
+import { useNavigate } from "react-router-dom";
 
 const ProductAdd = () => {
+  const navigate = useNavigate()
+  const [selectedCategory, setSelectedCategory] = useState();
+  const { categoryListDatat } = allStoreData();
+
+  // console.log(categoryListDatat, "categoryListDatat");
+
   const productaddMutation = {
     onSuccess: (res) => {
       console.log(res, "productadded");
+      navigate('/dashbord')
       toast.success("productadd successful!");
     },
     onError: (res) => {
@@ -17,14 +30,18 @@ const ProductAdd = () => {
 
   const { mutateAsync: prouctadd } = useProductaddMutation(productaddMutation);
   const { data: brandList } = useBrandListQuery();
-  console.log(brandList,"brandList")
-  
+  const { data: subcategorylist } = useSubCategoryListQuery();
+  // console.log(
+  //   subcategorylist?.subCategory,
 
-  
-
+  //   "subcategorylist"
+  // );
+  // const subcategorylistdsa = subcategorylist.data.data.subCategory
+  // console.log(subcategorylistdsa,"subcategorylistdsa")
+  // const brandlist123 = brandList.data?.data?.brand
 
   const onFinish = async (values) => {
-    console.log("Successfds:", values);
+    // console.log("Successfds:", values);
 
     try {
       const response = await prouctadd(values);
@@ -34,18 +51,25 @@ const ProductAdd = () => {
       console.error("error", err);
     }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+
+  const onCategoryChange = (value) => {
+    // console.log(value, "categoryupdated");
+    setSelectedCategory(value);
+    // console.log(selectedCategory,"selectedCategory")
   };
-
-
-
+  const filteredSubcategories = subcategorylist?.subCategory.filter(
+    (subCategory) => subCategory.categoryId === selectedCategory
+  );
+  // console.log(filteredSubcategories, "filteredSubcategories");
   return (
-    <div className="product-add">
-      <div className="heading">
-        <h4>Product Add</h4>
+    <>
+    <div className="heading" style={{textAlign:'center',marginBottom:'10px'}}>
+        <h3>Product Add</h3>
       </div>
+  <div className="product-add">
+      
       <div className="sub_product">
+      
         <Form
           name="basic"
           labelCol={{
@@ -61,7 +85,7 @@ const ProductAdd = () => {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+       
           autoComplete="off"
         >
           <Form.Item
@@ -122,16 +146,17 @@ const ProductAdd = () => {
             />
           </Form.Item>
           <Form.Item
-            label="brand"
+            label="Brand"
             name="brand"
-            rules={[
-              {
-                required: true,
-                message: "Please input your brand!",
-              },
-            ]}
+            rules={[{ required: true, message: "Please select a brand." }]}
           >
-            <Input />
+            <Select placeholder="Select a brand">
+              {brandList?.data?.data?.brand.map((brand) => (
+                <Select.Option key={brand._id} value={brand._id}>
+                  {brand.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item
             label="category"
@@ -143,7 +168,16 @@ const ProductAdd = () => {
               },
             ]}
           >
-            <Input />
+            <Select placeholder="Select a category" onChange={onCategoryChange}>
+              {categoryListDatat?.map((category) => {
+                {/* console.log(category, ";category"); */}
+                return (
+                  <Select.Option key={category._id} value={category._id}>
+                    {category.name}
+                  </Select.Option>
+                );
+              })}
+            </Select>
           </Form.Item>
           <Form.Item
             label="subCategory"
@@ -155,7 +189,15 @@ const ProductAdd = () => {
               },
             ]}
           >
-            <Input />
+            <Select placeholder="Select a subcategory">
+              {filteredSubcategories?.map((subcategory) => {
+                return (
+                  <Select.Option key={subcategory._id} value={subcategory._id}>
+                    {subcategory.name}
+                  </Select.Option>
+                );
+              })}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -171,7 +213,8 @@ const ProductAdd = () => {
         </Form>
       </div>
     </div>
+    </>
+    
   );
 };
-
 export default ProductAdd;

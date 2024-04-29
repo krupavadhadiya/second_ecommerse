@@ -4,4 +4,12 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    width: 100%;
+    max-width: 450px;
+    margin: auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px;
+    .sub_product{
+
+        margin-bottom: 10px;
+    }
 }
