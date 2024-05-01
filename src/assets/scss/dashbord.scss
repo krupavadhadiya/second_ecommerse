@@ -3,7 +3,21 @@
 
   max-width: 1600px;
   margin: auto;
+  .category-main{
 
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+     button{
+      background: black;
+      color: white;
+      padding: 6px 35px;
+      border-radius: 15px;
+      cursor: pointer;  
+
+     }
+
+  }
   .main-category {
     height: 100px;
     background: white;
@@ -11,6 +25,7 @@
   }
   .sub_category {
     margin: 0 40px;
+    cursor: pointer;
   }
   .main_carasoal {
     margin-top: 20px;
@@ -35,7 +50,6 @@
     .sub_product {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      background: white;
       grid-column-gap: 50px;
       grid-row-gap: 60px;
     }
@@ -44,6 +58,8 @@
       padding: 20px 20px 20px 20px;
       width: auto;
       height: auto;
+      background: white;
+
       cursor: pointer;
       .btn-delete{
         margin-top: 10px;

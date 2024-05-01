@@ -1,0 +1,21 @@
+.category-file{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+    margin: auto;
+    flex-direction: column;
+    .heading-data{
+
+        margin-bottom: 15px;
+    }
+    .category-form{
+        background-color: white;
+        padding: 15px;
+    }
+
+}

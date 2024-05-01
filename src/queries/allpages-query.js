@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { SubCategoryList, brandList, categoryList, productAddData, productList, prouctDelete, prouctSearch, userDetail } from "../api/auth_servise"
+import { SubCategoryList, brandList, categoryAddData, categoryDelete, categoryList, productAddData,cartDetail, productList, productListSearch, prouctAddToCart, prouctDelete, userDetail } from "../api/auth_servise"
 
 export const useCategoryQuery = () =>{
     return useQuery({
@@ -7,12 +7,18 @@ export const useCategoryQuery = () =>{
       queryFn: async () => await categoryList(),
     })
   }
-  export const useProductListQuery = () =>{
+  export const useProductListQuery = (data) =>{
     return useQuery({
       queryKey:["product-list"],
-      queryFn: async () => await productList(),
+      queryFn: async () => await productList(data),
     })
   }
+  // export const useProductListSearchQuery = (data) =>{
+  //   return useQuery({
+  //     queryKey:["product-search"],
+  //     queryFn: async () => await productListSearch(data),
+  //   })
+  // }
   
   export const useUserDetailQuery = () =>{
     return useQuery({
@@ -21,17 +27,21 @@ export const useCategoryQuery = () =>{
     })
   }
   
-  // export const useproductaddMutation = (mutational) =>{
-  
-  //   return useMutation();
-   
-  // }
+
   
   export const useProductaddMutation = (mutational) =>{
   
     return useMutation({
       mutationKey: ["product-add"],
       mutationFn: async (data) => await productAddData(data),
+      ...mutational
+    });
+  }
+  export const useCategoryAddMutation = (mutational) =>{
+  
+    return useMutation({
+      mutationKey: ["category-add"],
+      mutationFn: async (data) => await categoryAddData(data),
       ...mutational
     });
   }
@@ -56,11 +66,27 @@ export const useCategoryQuery = () =>{
       ...mutational
     });
   }
-  export const useProductSearchMutation = (mutational) =>{
+  export const useCategoryDeleteMutation = (mutational) =>{
   
     return useMutation({
-      mutationKey: ["product-search"],
-      mutationFn: async (value) => await prouctSearch(value),
+      mutationKey: ["catgory-delete"],
+      mutationFn: async (payload) => await categoryDelete(payload),
       ...mutational
     });
   }
+  export const useProductAddtoCartMutation = (mutational) =>{
+  
+    return useMutation({
+      mutationKey: ["product-addtocart"],
+      mutationFn: async (payload) => await prouctAddToCart(payload),
+      ...mutational
+    });
+  }
+
+  export const useCartListQuery = () =>{
+    return useQuery({
+      queryKey:["add-to-cart"],
+      queryFn: async () => await cartDetail(),
+    })
+  }
+  

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { allStoreData } from "../../store/allStoreData";
+import { allStoreData } from "../../store/useAllStoreData";
 import {
   useCategoryQuery,
   useProductDeleteMutation,
   useProductListQuery,
+  useSubCategoryListQuery,
   useUserDetailQuery,
 } from "../../queries/allpages-query";
 import mobileacc from "../../assets/Images/22fddf3c7da4c4f4.webp";
@@ -13,10 +14,12 @@ import carasoal2 from "../../assets/Images/carasoal2.webp";
 import carasoal3 from "../../assets/Images/carasoal3.webp";
 import carasoal4 from "../../assets/Images/carasoal4.webp";
 import { Carousel } from "antd";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { prouctDelete } from "../../api/auth_servise";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAllStoreData } from "../../store/useAllStoreData";
+import { CloseOutlined } from "@ant-design/icons"; // Ant Design provides close icon
 
 const contentStyle = {
   height: "300px", // You can adjust the height as needed
@@ -35,15 +38,20 @@ const imageStyle = {
 };
 const Dashbord = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
-  const { setState, categoryListDatat, ProductListData } = allStoreData();
+  const { setState, categoryListDatat, productListData, subcategoryListData } =
+    useAllStoreData();
+  console.log(subcategoryListData, "subcategoryListData");
 
   // const { data } = useCategoryQuery();
   // const { data } = useProductListQuery();
   const { data: categoryData } = useCategoryQuery();
   const { data: productData } = useProductListQuery();
   const { data: userDetail } = useUserDetailQuery();
+  const { data: subcategorylist } = useSubCategoryListQuery();
+
+
   console.log("userDetail123", userDetail);
 
   useEffect(() => {
@@ -57,7 +65,7 @@ const Dashbord = () => {
     if (productData) {
       const productResData = productData.data?.data || [];
       console.log("productResData", productResData);
-      setState({ ProductListData: productResData });
+      setState({ productListData: productResData });
     }
   }, [productData, setState]);
 
@@ -69,13 +77,22 @@ const Dashbord = () => {
     }
   }, [userDetail, setState]);
 
+
+  useEffect(() => {
+    const subCategorynewadd = subcategorylist?.subCategory;
+    setState({ subcategoryListData: subCategorynewadd });
+  }, [setState, subcategorylist]);
+
   const productadd = () => {
     navigate("/product");
+  };
+  const categoryadd = () => {
+    navigate("/category");
   };
 
   const productdeleteMutation = {
     onSuccess: (res) => {
-      queryClient.invalidateQueries({ queryKey: ['product-list'] })
+      queryClient.invalidateQueries({ queryKey: ["product-list"] });
 
       console.log(res, "product deleted");
       toast.success("product delete");
@@ -86,18 +103,12 @@ const Dashbord = () => {
     },
   };
 
-  const { mutateAsync: prouctDelete } = useProductDeleteMutation(productdeleteMutation);
-  const deleteproduct = async(id) => {
-    // console.log(id, "deleteid");
-
-    // const filterdata = ProductListData.filter((fval, i) => {
-    //   return fval._id !== id;
-    // });
-
-    // setState({ ProductListData: filterdata });
-
+  const { mutateAsync: prouctDelete } = useProductDeleteMutation(
+    productdeleteMutation
+  );
+  const deleteproduct = async (id) => {
     try {
-      const response = await prouctDelete({_id: id});
+      const response = await prouctDelete({ _id: id });
       // console.log(response, "responsesnkdn");
     } catch (err) {
       toast.error("An error occurred.");
@@ -105,23 +116,39 @@ const Dashbord = () => {
     }
   };
 
+  const productdetail = (id) => {
+    navigate(`/product-detail/${id}`);
+  };
+  const categorydetail = (id) => {
+    navigate(`/category-detail/${id}`);
+  };
   return (
     <div className="main-dashboard">
-      <div>
+      <div className="category-main">
         <div className="heading" style={{ marginBottom: "10px" }}>
           <h3>category</h3>
         </div>
+        {userDetail?.role === "ADMIN" ? (
+          <div className="category-btn">
+            <button onClick={categoryadd}>Category Add</button>
+          </div>
+        ) : null}
+      </div>
 
-        <div className="main-category">
-          {categoryListDatat.map((category, i) => (
-            <div className="sub_category" key={i}>
-              <div className="category_port">
-                <img src={mobileacc} />
-                <div>{category.name}</div>
-              </div>
+      <div className="main-category">
+        {categoryListDatat.map((category, i) => (
+          <div className="sub_category" key={i}>
+            <div
+              className="category_port"
+              onClick={() => categorydetail(category._id)}
+            >
+              <img src={mobileacc} />
+              <div>{category.name}</div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+
+        <div className="subcategory-list"></div>
       </div>
 
       <div className="main_carasoal">
@@ -147,27 +174,35 @@ const Dashbord = () => {
           </div>
           <div className="add_btn">
             <button onClick={productadd}>Product Add</button>
-            {userDetail?.role === "ADMIN " ? (
+            {/* {userDetail?.role === "ADMIN " ? (
               <button onClick={productadd}>Product Add</button>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
         <div className="sub_product">
-          {ProductListData.map((product, i) => {
+          {productListData.map((product, i) => {
             return (
               <div className="productlist">
                 <h4>{product.name}</h4>
-                <img src={wc} alt="" />
+                <img
+                  src={product.image}
+                  alt=""
+                  onClick={() => productdetail(product._id)}
+                  style={{ width: "170px", height: "150px", margin: "10px 0" }}
+                />
                 <div>Price:-{product.price}</div>
                 <div>brand:-{product.brand}</div>
                 <div>category:-{product.category}</div>
                 <div>subCategory:-{product.subCategory}</div>
-                <div className="btn-delete">
-                  <button onClick={() => deleteproduct(product._id)}>
-                    Delete
-                  </button>
-                  <button>Edit</button>
-                </div>
+
+                {userDetail?.role === "ADMIN" ? (
+                  <div className="btn-delete">
+                    <button onClick={() => deleteproduct(product._id)}>
+                      Delete
+                    </button>
+                    <button>Edit</button>
+                  </div>
+                ) : null}
               </div>
             );
           })}
@@ -176,9 +211,4 @@ const Dashbord = () => {
     </div>
   );
 };
-
 export default Dashbord;
-// display: grid;
-//     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-//     grid-column-gap: 50px;
-//     grid-row-gap: 60px;

@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 
 
-export const allStoreData = create((set) => ({
+export const useAllStoreData = create((set) => ({
 
     categoryListDatat:[],
-    ProductListData:[],
+    productListData:[],
     userData:[],
+    subcategoryListData:[],
 
    
     setState: (nexstate) => set((state) => ({ ...nexstate })),
