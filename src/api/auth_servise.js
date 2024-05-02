@@ -64,7 +64,12 @@ export const categoryDelete = async (data) => {
   const response = await instance.delete("/category/remove", { data: data });
   return response;
 };
+export const cartDataDelete = async (data) => {
+  console.log("prouctAddToCart", data);
+  const response = await instance.delete("/cart/remove", { data: data });
+  return response;
+};
 export const cartDetail = async () => {
   const response = await instance.get("/cart/");
-  return response;
+  return response.data.data;
 };

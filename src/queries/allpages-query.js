@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { SubCategoryList, brandList, categoryAddData, categoryDelete, categoryList, productAddData,cartDetail, productList, productListSearch, prouctAddToCart, prouctDelete, userDetail } from "../api/auth_servise"
+import { SubCategoryList, brandList, categoryAddData, categoryDelete, categoryList, productAddData,cartDetail, productList, productListSearch, prouctAddToCart, prouctDelete, userDetail, cartDataDelete } from "../api/auth_servise"
 
 export const useCategoryQuery = () =>{
     return useQuery({
@@ -71,6 +71,14 @@ export const useCategoryQuery = () =>{
     return useMutation({
       mutationKey: ["catgory-delete"],
       mutationFn: async (payload) => await categoryDelete(payload),
+      ...mutational
+    });
+  }
+  export const useCartDeleteMutation = (mutational) =>{
+  
+    return useMutation({
+      mutationKey: ["cart-delete"],
+      mutationFn: async (payload) => await cartDataDelete(payload),
       ...mutational
     });
   }

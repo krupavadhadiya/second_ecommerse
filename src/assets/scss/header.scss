@@ -1,57 +1,71 @@
-.main-header{
-    background: black;
-    color: white;
-    height: 45px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 40px;
-  
-    .web-name{
-        display: flex;
-    }
-    .all-menu{
-        ul{
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        li{
-            display: inline-block; 
-            margin-right: 25px; 
-            cursor: pointer;
-        }
-    }
-    .search-menu{
+.main-header {
+  background: black;
+  color: white;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 40px;
 
-        input{
-            border-radius: 15px;
-    height: 33px;
-    width: 255px;
-    outline: none; 
-        }
-        button{
-            height: 30px;
-    width: 100px;
-    border-radius: 15px;
-    cursor: pointer;
-        }
-    }
-    .logout-btn{
-       
-    }
-    .cart{
-        position:'relative';
-        .notification{
-            position: absolute;
-            top: 0;
+  .web-name {
+    display: flex;
+    margin-right: 25px;
+  }
+  .all-menu {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      .cartimg {
+        margin-left: 15px;
+        .length {
+          p {
             background: red;
-            width: 25px;
-            height: 25px;
-            text-align: center;
+            width: 20px;
+            margin-left: 8px;
+            /* text-align: center; */
             border-radius: 100%;
+            /* margin-top: 10px; */
+            align-items: center;
+            display: flex;
+            justify-content: center;
+          }
         }
+      }
     }
-    
+    li {
+      display: inline-block;
+      margin-right: 25px;
+      cursor: pointer;
+    }
+  }
+  .search-menu {
+    input {
+      border-radius: 15px;
+      height: 33px;
+      width: 885px;
+      outline: none;
+    }
+    button {
+      height: 30px;
+      width: 100px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+  }
+  .logout-btn {
+  }
+  .cart {
+    position: "relative";
+    .notification {
+      position: absolute;
+      top: 0;
+      background: red;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      border-radius: 100%;
+    }
+  }
 }

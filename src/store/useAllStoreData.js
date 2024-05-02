@@ -7,6 +7,7 @@ export const useAllStoreData = create((set) => ({
     productListData:[],
     userData:[],
     subcategoryListData:[],
+    addtoCartList:[],
 
    
     setState: (nexstate) => set((state) => ({ ...nexstate })),
